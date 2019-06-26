@@ -1,3 +1,8 @@
+
+
+/**
+ * represents a part in the system.
+ */
 abstract class APart implements IPart {
     State intake;
     State exit;
@@ -7,20 +12,19 @@ abstract class APart implements IPart {
         this.exit = null;
     }
 
-
     void findMissingPressOrTemp() {
         double basecase = -1000;
-        if (intake.pressure == basecase) {
-            intake.pressure = exit.pressure * intake.temperature / exit.temperature;
+        if (intake.getPressure() == basecase) {
+            intake.setPressure(exit.getPressure() * intake.getTemperature() / exit.getTemperature());
         }
-        if (intake.temperature == basecase) {
-            intake.temperature = intake.pressure * exit.temperature / exit.pressure;
+        if (intake.getTemperature() == basecase) {
+            intake.setTemperature(intake.getPressure() * exit.getTemperature() / exit.getPressure());
         }
-        if (exit.pressure == basecase) {
-            exit.pressure = intake.pressure * exit.temperature / intake.temperature;
+        if (exit.getPressure() == basecase) {
+            exit.setPressure( intake.getPressure() * exit.getTemperature() / intake.getTemperature());
         }
-        if (exit.temperature == basecase) {
-            exit.temperature = exit.pressure * intake.temperature / intake.pressure;
+        if (exit.getTemperature() == basecase) {
+            exit.setTemperature(exit.getPressure() * intake.getTemperature() / intake.getPressure());
         }
     }
 }

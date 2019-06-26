@@ -1,3 +1,8 @@
+
+
+/**
+ * this represents a heat exchanger in the
+ */
 class HeatExchanger extends APart {
     State intake;
     State exit;
@@ -19,66 +24,72 @@ class HeatExchanger extends APart {
 
     // calculates enthalpy
     void findMissingEnthalpy() {
-        if (this.coolantIntake.enthalpy == 0) {
-            this.coolantIntake.enthalpy = ((-this.heatTransfer
-                    - this.intake.massFlow * (this.intake.enthalpy - this.exit.enthalpy))
-                    / this.coolantExit.massFlow) + this.coolantExit.enthalpy;
+        if (this.coolantIntake.getEnthalpy() == 0) {
+            this.coolantIntake.setEnthalpy(((-this.heatTransfer
+                    - this.intake.getMassFlow() * (this.intake.getEnthalpy()
+                    - this.exit.getEnthalpy())) / this.coolantExit.getMassFlow())
+                    + this.coolantExit.getEnthalpy());
         }
-        if (this.coolantExit.enthalpy == 0) {
-            this.coolantExit.enthalpy = -(((-this.heatTransfer
-                    - this.intake.massFlow * (this.intake.enthalpy - this.exit.enthalpy))
-                    / this.coolantExit.massFlow) - this.coolantIntake.enthalpy);
+        if (this.coolantExit.getEnthalpy() == 0) {
+            this.coolantExit.setEnthalpy( -(((-this.heatTransfer
+                    - this.intake.getMassFlow() * (this.intake.getEnthalpy()
+                    - this.exit.getEnthalpy())) / this.coolantExit.getMassFlow())
+                    - this.coolantIntake.getEnthalpy()));
         }
-        if (this.exit.enthalpy == 0) {
-            this.exit.enthalpy = -(((-this.heatTransfer
-                    - this.coolantIntake.massFlow * (this.coolantIntake.enthalpy
-                    - this.coolantExit.enthalpy))
-                    / this.exit.massFlow) - this.intake.enthalpy);
+        if (this.exit.getEnthalpy() == 0) {
+            this.exit.setEnthalpy( -(((-this.heatTransfer
+                    - this.coolantIntake.getMassFlow() * (this.coolantIntake.getEnthalpy()
+                    - this.coolantExit.getEnthalpy()))
+                    / this.exit.getMassFlow()) - this.intake.getEnthalpy()));
         }
-        if (this.intake.enthalpy == 0) {
-            this.intake.enthalpy = ((-this.heatTransfer
-                    - this.coolantIntake.massFlow * (this.coolantIntake.enthalpy
-                    - this.coolantExit.enthalpy))
-                    / this.exit.massFlow) + this.exit.enthalpy;
+        if (this.intake.getEnthalpy() == 0) {
+            this.intake.setEnthalpy(((-this.heatTransfer
+                    - this.coolantIntake.getMassFlow() * (this.coolantIntake.getEnthalpy()
+                    - this.coolantExit.getEnthalpy()))
+                    / this.exit.getMassFlow()) + this.exit.getEnthalpy());
         }
     }
 
     // calculates energy transfer via heat
     void calculateHeatTransfer() {
-        if (this.coolantIntake.enthalpy != 0 && this.coolantExit.enthalpy != 0
-                && this.intake.enthalpy != 0 && this.exit.enthalpy != 0 && this.intake.massFlow != -1
-                && this.coolantIntake.massFlow != -1) {
-            this.heatTransfer = -(this.coolantExit.massFlow
-                    * (this.coolantIntake.enthalpy - this.coolantExit.enthalpy)
-                    + this.intake.massFlow * (this.intake.enthalpy - this.exit.enthalpy));
+        if (this.coolantIntake.getEnthalpy() != 0 && this.coolantExit.getEnthalpy() != 0
+                && this.intake.getEnthalpy() != 0 && this.exit.getEnthalpy() != 0
+                && this.intake.getMassFlow() != -1 && this.coolantIntake.getMassFlow() != -1) {
+            this.heatTransfer = -(this.coolantExit.getMassFlow()
+                    * (this.coolantIntake.getEnthalpy() - this.coolantExit.getEnthalpy())
+                    + this.intake.getMassFlow() * (this.intake.getEnthalpy()
+                    - this.exit.getEnthalpy()));
         }
         else if (this.entropyProduction != -1 && this.surfaceTemperature != 0
-                && this.intake.entropy != 0 && this.exit.entropy != 0 && this.coolantExit.entropy != 0
-                && this.coolantIntake.entropy != 0) {
+                && this.intake.getEntropy() != 0 && this.exit.getEntropy() != 0
+                && this.coolantExit.getEntropy() != 0 && this.coolantIntake.getEntropy() != 0) {
             this.heatTransfer = this.surfaceTemperature
-                    * -(this.intake.massFlow * (this.intake.entropy - this.exit.entropy)
-                    + this.coolantExit.massFlow * (this.coolantIntake.entropy - this.coolantExit.entropy)
+                    * -(this.intake.getMassFlow() * (this.intake.getEntropy()
+                    - this.exit.getEntropy()) + this.coolantExit.getMassFlow()
+                    * (this.coolantIntake.getEntropy() - this.coolantExit.getEntropy())
                     + this.entropyProduction);
         }
     }
 
     // calculates mass flow
     void calculateMassFlow() {
-        if (this.heatTransfer != 0 && this.surfaceTemperature != 0 && this.intake.massFlow != -1
-                && this.coolantExit.entropy != 0 && this.coolantIntake.entropy != 0
-                && this.intake.entropy != 0 && this.exit.entropy != 0 && this.entropyProduction != -1) {
-            this.coolantIntake.massFlow = (-(this.heatTransfer / this.surfaceTemperature)
-                    - this.intake.massFlow * (this.intake.entropy - this.exit.entropy)
-                    - this.entropyProduction) / (this.coolantIntake.entropy - this.coolantExit.entropy);
+        if (this.heatTransfer != 0 && this.surfaceTemperature != 0
+                && this.intake.getMassFlow() != -1 && this.coolantExit.getEntropy() != 0
+                && this.coolantIntake.getEntropy() != 0 && this.intake.getEntropy() != 0
+                && this.exit.getEntropy() != 0 && this.entropyProduction != -1) {
+            this.coolantIntake.setMassFlow((-(this.heatTransfer / this.surfaceTemperature)
+                    - this.intake.getMassFlow() * (this.intake.getEntropy()
+                    - this.exit.getEntropy()) - this.entropyProduction)
+                    / (this.coolantIntake.getEntropy() - this.coolantExit.getEntropy()));
         }
         else if (this.heatTransfer != 0 && this.surfaceTemperature != 0
-                && this.coolantIntake.massFlow != -1 && this.coolantExit.entropy != 0
-                && this.coolantIntake.entropy != 0 && this.intake.entropy != 0 && this.exit.entropy != 0
-                && this.entropyProduction != -1) {
-            this.intake.massFlow = (-(this.heatTransfer / this.surfaceTemperature)
-                    - this.coolantIntake.massFlow * (this.coolantIntake.entropy
-                    - this.coolantExit.entropy) - this.entropyProduction)
-                    / (this.intake.entropy - this.exit.entropy);
+                && this.coolantIntake.getMassFlow() != -1 && this.coolantExit.getEntropy() != 0
+                && this.coolantIntake.getEntropy() != 0 && this.intake.getEntropy() != 0
+                && this.exit.getEntropy() != 0 && this.entropyProduction != -1) {
+            this.intake.setMassFlow((-(this.heatTransfer / this.surfaceTemperature)
+                    - this.coolantIntake.getMassFlow() * (this.coolantIntake.getEntropy()
+                    - this.coolantExit.getEntropy()) - this.entropyProduction)
+                    / (this.intake.getEntropy() - this.exit.getEntropy()));
         }
     }
 }

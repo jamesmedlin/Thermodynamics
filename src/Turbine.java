@@ -2,30 +2,28 @@ class Turbine extends APart {
     State intake;
     State exit;
     double work;
-    double entropyProduction;
 
     Turbine() {
         super();
         this.work = 0;
-        this.entropyProduction = -1;
     }
 
     void matchFlows() {
-        if (this.intake.massFlow == -1 && this.exit.massFlow != -1) {
-            this.intake.massFlow = this.exit.massFlow;
+        if (this.intake.getMassFlow() == -1 && this.exit.getMassFlow() != -1) {
+            this.intake.setMassFlow(this.exit.getMassFlow());
         }
-        else if (this.exit.massFlow == -1 && this.intake.massFlow != -1) {
-            this.exit.massFlow = this.intake.massFlow;
+        else if (this.exit.getMassFlow() == -1 && this.intake.getMassFlow() != -1) {
+            this.exit.setMassFlow(this.intake.getMassFlow());
         }
     }
 
     void calculateWork() {
-        if (intake.massFlow != -1 && this.intake.enthalpy != 0 && this.exit.enthalpy != 0) {
-            this.work = this.intake.massFlow * (this.intake.enthalpy - this.exit.enthalpy);
+        if (intake.getMassFlow() != -1 && this.intake.getEnthalpy() != 0 && this.exit.getEnthalpy() != 0) {
+            this.work = this.intake.getMassFlow() * (this.intake.getEnthalpy() - this.exit.getEnthalpy());
         }
-        else if (this.intake.pressure != -1000 && this.intake.specificVolume != 0
-                && this.exit.specificVolume != 0) {
-            this.work = this.intake.pressure * (this.exit.specificVolume - this.intake.specificVolume);
+        else if (this.intake.getPressure() != -1000 && this.intake.getSpecificVolume() != 0
+                && this.exit.getSpecificVolume() != 0) {
+            this.work = this.intake.getPressure() * (this.exit.getSpecificVolume() - this.intake.getSpecificVolume());
         }
     }
 
