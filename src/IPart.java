@@ -25,17 +25,17 @@ public interface IPart extends IReadOnlyPart {
    */
   IState getExit();
 
-  /**
-   * sets the exit state of this part.
-   * @param state the state of the exit
-   */
-  void addExit(IState state);
-
-  /**
-   * sets the inlet state of this part.
-   * @param state the state of the inlet
-   */
-  void addInlet(IState state);
+//  /**
+//   * sets the exit state of this part.
+//   * @param state the state of the exit
+//   */
+//  void addExit(IState state);
+//
+//  /**
+//   * sets the inlet state of this part.
+//   * @param state the state of the inlet
+//   */
+//  void addInlet(IState state);
 
   /**
    * sets the work to the given value.

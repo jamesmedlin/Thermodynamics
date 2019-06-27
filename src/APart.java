@@ -6,6 +6,8 @@
 abstract class APart implements IPart {
     State intake;
     State exit;
+    double work;
+    double heatTranfer;
 
     APart() {
         this.intake = null;

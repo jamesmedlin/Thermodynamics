@@ -20,4 +20,6 @@ public interface IModel {
      * @param name2 the part with the inlet state
      */
     void connectParts(String name1, String name2);
+
+
 }
