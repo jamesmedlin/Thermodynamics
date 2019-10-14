@@ -1,5 +1,9 @@
 # ThermodynamicsProject
 
+My knowledge of thermodynamics manifests itself in the design and abstraction of some parts and calculations. My computer science skills are exemplified in object oriented patterns such as the builder pattern, factory pattern,  decorator, and more.
+I am currently working on this project and plan to make a view interface soon, which may be apparent as I have designed some immutable information that can be safely passed to other interfaces. 
+
+
 # IModel
 This `interface` represents a chain of parts in sequence for the purpose of being thermodynamically analyzed.
 This system is comprised of parts, seperated by states, designed to be mutable to conistently have one part's exit be the next part's inlet.
