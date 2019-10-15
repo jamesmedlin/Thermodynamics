@@ -1,6 +1,6 @@
 # ThermodynamicsProject
 
-My knowledge of thermodynamics manifests itself in the design and abstraction of some parts and calculations. My computer science skills are exemplified in object oriented patterns such as the builder pattern, factory pattern,  decorator, and more.
+My knowledge of thermodynamics manifests itself in the design and abstraction of some parts and calculations. My computer science skills are exemplified in object oriented patterns such as the builder pattern, factory pattern, decorator patter, and more.
 I am currently working on this project and plan to make a view interface soon, which may be apparent as I have designed some immutable information that can be safely passed to other interfaces. 
 
 
